@@ -23,3 +23,11 @@ DONE
 + Standardize signatures
 + Make functions generics
 + parLapply-like function
+
+RCT TODO
+--------
+
++ Implement genericized bpmapply (using bplapply?)
++ Implement genericized bpvectorize (using bplapply)
+    + Drop legacy pvectorize?
++ Implement chunk sizing for bpvec
