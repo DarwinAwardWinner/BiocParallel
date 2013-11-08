@@ -139,3 +139,11 @@ setMethod(bpiterate, c("ANY", "ANY", "SerialParam"),
 
     .bpiterate_serial(ITER, FUN, ...)
 })
+
+setMethod(bpexport, "SerialParam",
+    function(x, ...)
+{
+    ## TODO: Maybe it should emulate the "snapshot of the value when
+    ## bpexport was called" functionality?
+    warning("bpexport not needed for SerialParam")
+})

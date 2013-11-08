@@ -126,6 +126,12 @@ setReplaceMethod("bpprogressbar", c("BiocParallelParam", "logical"),
     x
 })
 
+setMethod(bpexport, "BiocParallelParam",
+    function(x, ...)
+{
+    stop("bpexport not supported on this param")
+})
+
 ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ### Helpers

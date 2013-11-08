@@ -450,3 +450,13 @@ setAs("spawnedMPIcluster", "SnowParam",
     .SnowParam(.clusterargs=.clusterargs, cluster=from, .controlled=FALSE,
                workers=length(from))
 })
+
+setMethod(bpexport, "SnowParam",
+    function(x, varlist, envir, ...)
+{
+    if (length(list(...)))
+        stop("Wrong arguments") # TODO Improve error message?
+    if (missing(envir))
+        envir <- .GlobalEnv
+    clusterExport(cl=bpbackend(BPPARAM), varlist, envir)
+})

@@ -201,3 +201,10 @@ setMethod(bpiterate, c("ANY", "ANY", "BatchJobsParam"),
 {
     stop(paste0("bpiterate not supported for BatchJobsParam"))
 })
+
+setMethod(bpexport, "BatchJobsParam",
+    function(x, ...)
+{
+    ## TODO
+    stop("bpexport not supported on this param")
+})

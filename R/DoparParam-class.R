@@ -89,3 +89,10 @@ setMethod(bpiterate, c("ANY", "ANY", "DoparParam"),
 {
     stop(paste0("bpiterate not supported for DoparParam"))
 })
+
+setMethod(bpexport, "DoparParam",
+    function(x, ...)
+{
+    ## TODO use .export arg to foreach
+    stop("bpexport not supported on this param")
+})

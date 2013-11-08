@@ -104,3 +104,11 @@ setMethod(bpvec, c("ANY", "MulticoreParam"),
 
     pvec(X, FUN, ..., AGGREGATE=AGGREGATE, mc.cores=bpworkers(BPPARAM))
 })
+
+setMethod(bpexport, "MulticoreParam",
+    function(x, ...)
+{
+    ## TODO: Maybe it should emulate the "snapshot of the value when
+    ## bpexport was called" functionality?
+    warning("bpexport not needed for MulticoreParam")
+})

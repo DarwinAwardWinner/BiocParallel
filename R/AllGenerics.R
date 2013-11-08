@@ -99,3 +99,6 @@ setGeneric("bpbackend<-",
 
 setGeneric("bpschedule",
     function(x, ...) standardGeneric("bpschedule"))
+
+setGeneric("bpexport", signature="x",
+    function(x, varlist, envir, ...) standardGeneric("bpexport"))
