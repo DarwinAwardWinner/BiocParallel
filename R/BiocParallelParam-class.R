@@ -12,6 +12,9 @@
                      catch.errors=catch.errors)
           callSuper(...)
       },
+      finalize = function() {
+          bpstop(.self)
+      },
       show = function() {
           cat("class: ", class(.self), "; bpisup: ", bpisup(.self),
               "; bpworkers: ", bpworkers(.self), "; catch.errors: ",
