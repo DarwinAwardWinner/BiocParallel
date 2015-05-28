@@ -1,7 +1,7 @@
 test_BatchJobsParam <- 
     function() 
 {
-    backend <- BatchJobsParam(progressbar=FALSE, cleanup=TRUE)
+    backend <- BatchJobsParam(progressbar=FALSE, cleanup=TRUE, batchid="BPTest")
     register(backend)
 
     f <- function(x) if (x == 0) stop(x) else x
