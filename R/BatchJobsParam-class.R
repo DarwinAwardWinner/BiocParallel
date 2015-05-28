@@ -12,7 +12,9 @@
         reg.pars="list",
         submit.pars="list",
         conf.pars="list",
-        cleanup="logical"),
+        cleanup="logical",
+        batchid="character"
+        ),
     methods=list(
         initialize = function(..., 
             conf.pars=list(), 
@@ -60,7 +62,8 @@
 BatchJobsParam <-
     function(workers=NA_integer_, catch.errors=TRUE, cleanup=TRUE,
         work.dir=getwd(), stop.on.error=FALSE, seed=NULL, resources=NULL,
-        conffile=NULL, cluster.functions=NULL, progressbar=TRUE, ...)
+        conffile=NULL, cluster.functions=NULL, progressbar=TRUE,
+        batchid="BiocParallel", ...)
 {
     if (!"package:BatchJobs" %in% search()) {
         tryCatch({
@@ -80,8 +83,26 @@ BatchJobsParam <-
     .BatchJobsParam(reg.pars=reg.pars, submit.pars=submit.pars,
                     conf.pars=conf.pars, workers=workers, 
                     catch.errors=catch.errors, cleanup=cleanup, 
-                    stop.on.error=stop.on.error, progressbar=progressbar, ...)
+                    stop.on.error=stop.on.error, progressbar=progressbar,
+                    batchid=batchid, ...)
 }
+
+### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+### Validity
+###
+
+## setValidity("BatchJobsParam", function(object)
+## {
+##     msg <- NULL
+
+##     ## Name must be length 1
+##     ## workers and tasks
+##     id <- bpbatchid(object)
+##     if (length(id) != 1L)
+##         msg <- c(msg, "'id' must be character(1)")
+
+##     if (is.null(msg)) TRUE else msg
+## })
 
 ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ### Methods - control
@@ -132,8 +153,8 @@ setMethod(bpmapply, c("ANY", "BatchJobsParam"),
 
     ## create registry, handle cleanup
     file.dir <- file.path(BPPARAM$reg.pars$work.dir,
-        tempfile("BiocParallel_tmp_", ""))
-    pars <- c(list(id="bpmapply", file.dir=file.dir, skip=FALSE),
+        tempfile(sprintf("%s_tmp_", BPPARAM$batchid), ""))
+    pars <- c(list(id=BPPARAM$batchid, file.dir=file.dir, skip=FALSE),
         BPPARAM$reg.pars)
     reg <- suppressMessages(do.call("makeRegistry", pars))
     if (BPPARAM$cleanup)
@@ -201,3 +222,14 @@ setMethod(bpiterate, c("ANY", "ANY", "BatchJobsParam"),
 {
     stop(paste0("bpiterate not supported for BatchJobsParam"))
 })
+
+## ## TODO: Generics?
+## bpbatchid <- function(x)
+## {
+##     x$batchid
+## }
+
+## `bpbatchid<-` <- function(x, id) {
+##     x$batchid <- id
+##     x
+## }
